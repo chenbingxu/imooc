@@ -9,7 +9,8 @@ class GesturePage extends StatefulWidget {
 }
 
 class _GesturePageState extends State<GesturePage> {
-  int _currentIndex = 0;
+  String printString = '';
+  double moveX = 0, moveY = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +36,63 @@ class _GesturePageState extends State<GesturePage> {
           widthFactor: 1.0,
           child: Stack(
             children: <Widget>[
-              Column(),
+              Column(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () => _printMsg('点击'),
+                    onDoubleTap: () => _printMsg('双击'),
+                    onLongPress: () => _printMsg('长按'),
+                    onTapCancel: () => _printMsg('点击取消'),
+                    onTapUp: (element) => _printMsg('点击抬起'),
+                    onTapDown: (element) => _printMsg('点击按下'),
+                    child: Container(
+                      padding: EdgeInsets.all(60),
+                      decoration: BoxDecoration(color: Colors.blueAccent),
+                      child: Text(
+                        '点我',
+                        style: TextStyle(
+                          fontSize: 36.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(printString),
+                ],
+              ),
+              Positioned(
+                left: moveX,
+                top: moveY,
+                child: GestureDetector(
+                  onPanUpdate: (element) => _doMove(element),
+                  child: Container(
+                    width: 72.0,
+                    height: 72.0,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(36),  //设置为半径
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _printMsg(String msg) {
+    setState(() {
+      printString += ' , ${msg}';
+    });
+  }
+
+  _doMove(DragUpdateDetails element) {
+    setState(() {
+      moveY += element.delta.dy;
+      moveX += element.delta.dx;
+    });
+    print(element);
   }
 }
