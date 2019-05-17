@@ -17,6 +17,12 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
+          leading: GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back),
+          ),
           title: Text("如何创建和使用Flutter的路由与导航？"),
         ),
         body: RouteNavigator(),
