@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:imooc/plugin_use.dart';
 import 'package:imooc/less_group_page.dart';
 import 'package:imooc/stateful_group_page.dart';
+import 'package:imooc/flutter_layout_page.dart';
 
-void main() => runApp(StatefulGroup());
+void main() => runApp(FlutterLayoutPage());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
