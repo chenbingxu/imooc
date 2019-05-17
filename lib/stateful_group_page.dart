@@ -8,6 +8,8 @@ class StatefulGroup extends StatefulWidget {
 }
 
 class _StatefulGroupState extends State<StatefulGroup> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = TextStyle(
@@ -23,6 +25,12 @@ class _StatefulGroupState extends State<StatefulGroup> {
           title: Text('StatelessWidget与基础组件'),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex, //默认选中第0个
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               //可以设置两个状态
