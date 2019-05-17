@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:imooc/plugin_use.dart';
+import 'package:flutter_color_plugin/flutter_color_plugin.dart';
 
-void main() => runApp(PluginUse());
-
-class MyApp extends StatelessWidget {
+class PluginUse extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '如何使用Flutter包和插件？',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,7 +19,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: '如何使用Flutter包和插件？'),
     );
   }
 }
@@ -94,6 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'You have pushed the button this many times:',
+              style: TextStyle(
+                color: ColorUtil.color('#f2f2f2'),
+              ),
             ),
             Text(
               '$_counter',
