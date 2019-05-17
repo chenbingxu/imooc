@@ -4,20 +4,26 @@ import 'package:flutter_color_plugin/flutter_color_plugin.dart';
 class PluginUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //问题分析，写在页面非根节点的pop会导致pop不彻底，残留上层Widget。
+    _goback(){
+      Navigator.pop(context);
+    }
     return MaterialApp(
       title: '如何使用Flutter包和插件？',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: '如何使用Flutter包和插件？'),
+      home: MyHomePage(title: '如何使用Flutter包和插件？', goback: _goback),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title, this.goback}) : super(key: key);
 
   final String title;
+
+  final Function goback;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            widget.goback();
           },
           child: Icon(Icons.arrow_back),
         ),
