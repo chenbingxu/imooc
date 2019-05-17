@@ -6,6 +6,8 @@ import 'package:imooc/stateful_group_page.dart';
 import 'package:imooc/flutter_layout_page.dart';
 import 'package:imooc/gesture_page.dart';
 
+import 'launch_page.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
         'layout': (BuildContext context) => FlutterLayoutPage(),
         'gesture': (BuildContext context) => GesturePage(),
         'res': (BuildContext context) => ResPage(),
+        'launch': (BuildContext context) => LaunchPage(),
       },
     );
   }
@@ -76,6 +79,7 @@ class _RouteNavigatorState extends State<RouteNavigator> {
           _item('如何进行Flutter布局开发', FlutterLayoutPage(), 'layout'),
           _item('如何检测用户用户手势以及处理点击事件？', GesturePage(), 'gesture'),
           _item('资产管理？', ResPage(), 'res'),
+          _item('打开浏览器', LaunchPage(), 'launch'),
         ],
       ),
     );
