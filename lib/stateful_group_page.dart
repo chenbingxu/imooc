@@ -45,6 +45,10 @@ class _StatefulGroupState extends State<StatefulGroup> {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: null,
+          child: Text("点我"),
+        ),
         body: _currentIndex == 0
             ? Container(
                 decoration: BoxDecoration(
