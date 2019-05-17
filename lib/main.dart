@@ -4,7 +4,7 @@ import 'package:imooc/less_group_page.dart';
 import 'package:imooc/stateful_group_page.dart';
 import 'package:imooc/flutter_layout_page.dart';
 
-void main() => runApp(FlutterLayoutPage());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,103 +13,73 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("如何创建和使用Flutter的路由与导航？"),
+        ),
+        body: RouteNavigator(),
+      ),
+
+      //typedef WidgetBuilder = Widget Function(BuildContext context);
+      //typedef就是给带返回类型的，参数信息的函数对象类取个别名，在函数作为参数传递是避免返回类型信息丢失。
+      routes: <String, WidgetBuilder>{
+        'plugin': (BuildContext context) => PluginUse(),
+        'less': (BuildContext context) => LessGroupPage(),
+        'ful': (BuildContext context) => StatefulGroup(),
+        'layout': (BuildContext context) => FlutterLayoutPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class RouteNavigator extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _RouteNavigatorState createState() => _RouteNavigatorState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+class _RouteNavigatorState extends State<RouteNavigator> {
+  //true根据路由名称跳转，false通过Navigator直接跳转
+  bool byName = false;
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return Container(
+      child: Column(
+        children: <Widget>[
+          //开关列表瓷砖//开则传true关则传false
+          SwitchListTile(
+            title: Text("${byName?'':'不'}通过路由名跳转"),
+            value: byName,
+            //onChanged填写回调函数
+            onChanged: (value) {
+              setState(() {
+                byName = value;
+              });
+            },
+          ),
+          // 显示的文案，具体页面实例，路由名字。
+          // 对应用实例切路由和用系统注册的路由名字切路由。
+          _item('如何使用Fluttter包和插件', PluginUse(), 'plugin'),
+          _item('StatelessWidget与基础组件', LessGroupPage(), 'less'),
+          _item('StatefulWidget与基础组件', StatefulGroup(), 'ful'),
+          _item('如何进行Flutter布局开发', FlutterLayoutPage(), 'layout'),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  _item(String title, page, String routeName) {
+    return Container(
+        child: RaisedButton(
+      onPressed: () {
+        if(byName) {
+          Navigator.pushNamed(context, routeName);
+        }else{
+          Navigator.push(context,MaterialPageRoute(builder:(context)=>page));
+        }
+      },
+      child: Text(title),
+    ));
   }
 }
