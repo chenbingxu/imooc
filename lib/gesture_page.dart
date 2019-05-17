@@ -33,6 +33,11 @@ class _GesturePageState extends State<GesturePage> {
         ),
         body: FractionallySizedBox(
           widthFactor: 1.0,
+          child: Stack(
+            children: <Widget>[
+              Column(),
+            ],
+          ),
         ),
       ),
     );
