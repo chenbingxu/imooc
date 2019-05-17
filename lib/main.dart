@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imooc/plugin_use.dart';
 import 'package:imooc/less_group_page.dart';
+import 'package:imooc/res_page.dart';
 import 'package:imooc/stateful_group_page.dart';
 import 'package:imooc/flutter_layout_page.dart';
 import 'package:imooc/gesture_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         'ful': (BuildContext context) => StatefulGroup(),
         'layout': (BuildContext context) => FlutterLayoutPage(),
         'gesture': (BuildContext context) => GesturePage(),
+        'res': (BuildContext context) => ResPage(),
       },
     );
   }
@@ -73,6 +75,7 @@ class _RouteNavigatorState extends State<RouteNavigator> {
           _item('StatefulWidget与基础组件', StatefulGroup(), 'ful'),
           _item('如何进行Flutter布局开发', FlutterLayoutPage(), 'layout'),
           _item('如何检测用户用户手势以及处理点击事件？', GesturePage(), 'gesture'),
+          _item('资产管理？', ResPage(), 'res'),
         ],
       ),
     );
